@@ -18,6 +18,7 @@ public class UserController {
     public Integer postUser(@RequestBody User user)
     {
         Integer id = userMap.size();
+        user.setId(id);
         userMap.put(id, user);
         return id;
     }
