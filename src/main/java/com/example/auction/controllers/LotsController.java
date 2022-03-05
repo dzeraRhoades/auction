@@ -10,22 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/Lots")
+@RequestMapping("/api/lots")
 public class LotsController {
    //private List<Lot> lotList;
-    private HashMap<Integer, Lot> lotMap;
+    private HashMap<Integer, Lot> lotMap = new HashMap<>();
 
     @PostMapping("")
     public Integer postLot(@RequestBody Lot lot)
     {
         Integer id = lotMap.size();
         lot.setId(id);
+        lot.setBetList(new ArrayList<>()); //why don't create in default constructor???
         lotMap.put(id, lot);
         return id;
     }
-    @PostMapping("/bets")
-    public Integer postBet(@RequestBody Bet bet, @RequestBody Integer lotId)
+    @PostMapping("/bets/{id}")
+    public Integer postBet(@RequestBody Bet bet, @PathVariable("id") Integer lotId)
     {
+        System.out.println(lotId);
         lotMap.get(lotId).getBetList().add(bet);
         return lotMap.get(lotId).getBetList().size();
     }
